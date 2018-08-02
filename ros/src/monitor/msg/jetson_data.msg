@@ -1,0 +1,9 @@
+int16 RAM_max
+int16 RAM_min
+int8 RAM_percentage
+int8 CPU1_percentage
+int8 CPU2_percentage
+int8 CPU3_percentage
+int8 CPU4_percentage
+int8 CPU5_percentage
+int8 CPU6_percentage

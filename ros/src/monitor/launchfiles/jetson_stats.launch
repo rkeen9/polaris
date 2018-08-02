@@ -1,0 +1,3 @@
+<launch>
+    <node name="jetson_stats" pkg="monitor" type="jetson_stats.py" required="true"/>
+</launch>
