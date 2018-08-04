@@ -16,7 +16,6 @@ def jetson_monitor():
     
     rate = rospy.Rate(1) # 10hz
     while not rospy.is_shutdown():
-        #hello_str = "hello world %s" % rospy.get_time()
         data = jetson_data()
         global string
         CPU_percentage = string[5]
@@ -46,30 +45,10 @@ def jetson_monitor():
         rospy.loginfo("Nothing")
         pub.publish(data)
         rate.sleep()
-        
-
-"""
-import rospy
-from std_msgs.msg import String
-from monitor.msg import jetson_data
-
-def talker():
-    pub = rospy.Publisher('chatter', String, queue_size=10)
-    rospy.init_node('talker', anonymous=True)
-    rate = rospy.Rate(0.2) # 10hz
-    while not rospy.is_shutdown():
-        hello_str = "hello world %s" % rospy.get_time()
-        rospy.loginfo(hello_str)
-        pub.publish(hello_str)
-        rate.sleep()
-
-"""
 
 if __name__ == '__main__':
     try:
         rospy.init_node('jetson_monitor', anonymous=True)
-        #directory ="current directory: %s", os.getcwd()
-        #rospy.logerr(directory)
         jetson_monitor()
     except rospy.ROSInterruptException:
         pass
