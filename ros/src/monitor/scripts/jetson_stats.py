@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 # license removed for brevity
 import rospy
+import subprocess
+import os
+
 from std_msgs.msg import String
 from monitor.msg import jetson_data
 
-string = "RAM 1652/7854MB (lfb 1237x4MB) CPU [1%@2035,0%@2035,0%@2035,4%@2035,1%@2035,6%@2035] BCPU@31C MCPU@31C GPU@29.5C PLL@31C Tboard@27C Tdiode@27.25C PMIC@100C thermal@30.1C VDD_IN 2451/2471 VDD_CPU 306/311 VDD_GPU 153/153 VDD_SOC 612/612 VDD_WIFI 0/10 VDD_DDR 828/828"
+BIN_PATH = os.path.join(os.path.dirname(__file__), 'jetson')
+string = subprocess.check_output([BIN_PATH])
 string = string.split(" ")
 
 def jetson_monitor():
     pub = rospy.Publisher('jetson_info', jetson_data, queue_size=10)
-    rospy.init_node('jetson_monitor', anonymous=True)
+    
     rate = rospy.Rate(1) # 10hz
     while not rospy.is_shutdown():
         #hello_str = "hello world %s" % rospy.get_time()
@@ -63,6 +67,9 @@ def talker():
 
 if __name__ == '__main__':
     try:
+        rospy.init_node('jetson_monitor', anonymous=True)
+        #directory ="current directory: %s", os.getcwd()
+        #rospy.logerr(directory)
         jetson_monitor()
     except rospy.ROSInterruptException:
         pass
